@@ -6,9 +6,11 @@ import com.phonebook.demo.entity.Contact;
 
 public interface ContactService {
 	
-	public Contact saveContact(Contact contact);
+	public String saveContact(Contact contact);
 	public List<Contact> getAllContact();
+	public Contact getContact(Long contactId);
 	public String updateContact(Contact contact);
-	public String deleteContact(Long id);
+	public String deleteContact(Long contactId);
+	
 	
 }
