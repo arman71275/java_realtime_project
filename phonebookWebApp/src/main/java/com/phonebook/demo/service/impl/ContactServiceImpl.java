@@ -20,6 +20,7 @@ public class ContactServiceImpl implements ContactService {
 		contactRepository.save(contact);
 		
 		if (contact.getContactId() != 0) {
+			
 			return "Record saved successfully..";
 		} else
 			return "Contact Failed to Save";
@@ -47,7 +48,7 @@ public class ContactServiceImpl implements ContactService {
 			contactRepository.save(contact);
 			return "Record Updated";
 		}else
-		return  "Id"+ contact.getContactId()+ " Record found..";
+		return  "Id "+ contact.getContactId()+ " Record Not found..";
 	}
 
 	@Override
