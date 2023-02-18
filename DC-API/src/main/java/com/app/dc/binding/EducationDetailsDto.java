@@ -8,5 +8,7 @@ public class EducationDetailsDto {
 	private String degree;
 	private Date date;
 	private String university;
+	
+	private long caseNumber;
 
 }

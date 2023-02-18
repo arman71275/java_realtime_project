@@ -1,7 +1,5 @@
 package com.app.dc.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,11 +7,13 @@ import javax.persistence.Table;
 
 import lombok.Data;
 @Entity
-@Table(name="PLAN_SELECTION")
+@Table(name="PLAN_MASTER")  //for dropdown
 @Data
-public class PlanSelectionEntity {
+public class PlanEntity {
 	@Id
 	@GeneratedValue
-	private long caseNo;
+	private Integer planId;   //primaryKey
 	private String planName;
+	
+	private Integer caseNum; //forignKey reference to DC_CASES
 }
