@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jrtp.app.binding.CitizenAppDto;
 import com.jrtp.app.service.CitizenRegistrationServie;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/citizen")
+@Slf4j
 public class CitizenAppController {
 	
 	@Autowired
@@ -20,6 +23,7 @@ public class CitizenAppController {
 	
 	@PostMapping("/post")
 	public ResponseEntity<String> citizenRegister(@RequestBody CitizenAppDto citizenAppDto){
+		log.info("CitizenAppController::citizenRegister request body {}",citizenAppDto);
 		String response = citizenRegistrationServie.registrationCitizen(citizenAppDto);
 		return new ResponseEntity<String>(response,HttpStatus.OK);
 	}
