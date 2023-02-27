@@ -3,6 +3,7 @@ package com.app.dc.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -15,5 +16,8 @@ public class PlanEntity {
 	private Integer planId;   //primaryKey
 	private String planName;
 	
-	private Integer caseNum; //forignKey reference to DC_CASES
+	//private Integer caseNum; //forignKey reference to DC_CASES
+	
+	@OneToOne(mappedBy = "planEntity")
+	private DcCaseEntity dcCaseEntity;
 }

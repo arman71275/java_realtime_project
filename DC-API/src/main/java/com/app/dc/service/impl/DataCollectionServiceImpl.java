@@ -51,7 +51,7 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 	
 	
 	@Override
-	public PlanSelectionDto createCasse(int appId) {
+	public PlanSelectionDto createCasse(long appId) {
 		PlanSelectionDto planSelection = new PlanSelectionDto();
 		
 		Optional<CitizenAppEntity> planById=  citizenAppRepository.findById(appId);
