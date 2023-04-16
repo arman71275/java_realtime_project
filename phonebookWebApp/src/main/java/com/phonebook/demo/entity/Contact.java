@@ -19,9 +19,10 @@ import lombok.Setter;
 public class Contact {
 	@Id
 	@GeneratedValue
-	long contactId;
-	String contactName;
-	String contactEmail;
-	long contactNo;
+	private long contactId;
+	private String activeSw;
+	private String contactName;
+	private String contactEmail;
+	private long contactNo;
 
 }

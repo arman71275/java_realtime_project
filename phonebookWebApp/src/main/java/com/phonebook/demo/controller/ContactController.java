@@ -1,11 +1,14 @@
 package com.phonebook.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phonebook.demo.entity.Contact;
+import com.phonebook.demo.exception.ApiError;
 import com.phonebook.demo.repository.ContactRepository;
 import com.phonebook.demo.service.ContactService;
 
@@ -53,4 +57,11 @@ public class ContactController {
 	public String deleteContact(@PathVariable Long contactId) {
 		return contactService.deleteContact(contactId);
 	}
+	
+	
+	@ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleException(Exception e) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND.value(), e.getMessage(), new Date());
+        return new ResponseEntity<ApiError>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

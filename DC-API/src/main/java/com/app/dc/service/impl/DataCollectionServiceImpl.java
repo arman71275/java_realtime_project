@@ -31,7 +31,9 @@ import com.app.dc.repository.PlanSelectionRepository;
 import com.app.dc.service.DataCollectionService;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import lombok.extern.slf4j.Slf4j;
 @Service
+@Slf4j
 public class DataCollectionServiceImpl implements DataCollectionService{
 	
 	@Autowired
@@ -55,12 +57,13 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 		PlanSelectionDto planSelection = new PlanSelectionDto();
 		
 		Optional<CitizenAppEntity> planById=  citizenAppRepository.findById(appId);
-		
-		if(!planById.isPresent()) {
+		log.info("DataCollectionService::createCasse request appId {}",appId);
+		if(planById.isPresent()) {
 			//create case
 			DcCaseEntity caseEntity = new DcCaseEntity();
 			caseEntity.setAppId(appId);
 			dcCaseRepository.save(caseEntity);
+			System.out.println("caseEntity::"+caseEntity);
 			
 			//fetching plan names for dropdown
 			List<PlanEntity> planList = planSelectionRepository.findAll();
