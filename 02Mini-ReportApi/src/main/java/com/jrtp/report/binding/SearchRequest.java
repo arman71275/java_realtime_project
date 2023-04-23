@@ -8,6 +8,7 @@ import lombok.Data;
 public class SearchRequest {
 	private String planName;
 	private String planStatus;
+	private String gender;
 	private LocalDate startDate;
 	private Date endDate;
 	
