@@ -2,6 +2,8 @@ package com.registraion.demo.binding;
 
 import java.time.LocalDate;
 
+import lombok.Data;
+@Data
 public class UserForm {
 	private String firstName;
 	private String lastName;

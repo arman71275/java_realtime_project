@@ -1,9 +1,14 @@
 package com.registraion.demo.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import lombok.Data;
 
+@Entity
 @Data
 public class CountryMaster {
-private long countryId;
-private String countryName;
+	@Id
+	private Integer countryId;
+	private String countryName;
 }
