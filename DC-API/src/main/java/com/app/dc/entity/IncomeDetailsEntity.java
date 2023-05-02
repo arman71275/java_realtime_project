@@ -5,14 +5,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
-@Table(name ="INCOME_DETAILS")
+@Table(name ="DC_INCOME")
+@Data
 public class IncomeDetailsEntity {
 	@Id
 	@GeneratedValue
-	private long caseNo;
-	private int monthlyIncome;
+	private long incomeId;  //primary key
+	private int salaryIncome;
 	private int rentIncome;
 	private int propertyIncome;
+	
+	private Integer caseNum; //forignKey reference to DC_CASES
 
 }

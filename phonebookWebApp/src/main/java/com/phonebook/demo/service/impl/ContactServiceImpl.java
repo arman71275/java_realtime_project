@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.phonebook.demo.entity.Contact;
+import com.phonebook.demo.exception.AccountNotFoundexception;
 import com.phonebook.demo.repository.ContactRepository;
 import com.phonebook.demo.service.ContactService;
 
@@ -29,17 +30,19 @@ public class ContactServiceImpl implements ContactService {
 
 	@Override
 	public List<Contact> getAllContact() {
-		return contactRepository.findAll();
-
+//		return contactRepository.findAll();
+return contactRepository.findByActiveSw("Y");
 	}
 
 	@Override
 	public Contact getContact(Long contactId) {
 		Optional<Contact> getcontactById = contactRepository.findById(contactId);
+		
 		if (getcontactById.isPresent()) {
 			return getcontactById.get();
+		}else {
+		 throw new AccountNotFoundexception("User Account Not found");
 		}
-		return null;
 	}
 
 	@Override
@@ -53,11 +56,20 @@ public class ContactServiceImpl implements ContactService {
 
 	@Override
 	public String deleteContact(Long contactId) {
-		if(contactRepository.existsById(contactId)) {
-			contactRepository.deleteById(contactId);
-			return "Record Deleted..";
-		}else
-		return "No Record Found";
+		/*
+		 * if(contactRepository.existsById(contactId)) {
+		 * contactRepository.deleteById(contactId); return "Record Deleted.."; }else
+		 * return "No Record Found";
+		 */
+		Optional<Contact> findById = contactRepository.findById(contactId);
+	if(findById.isPresent()) {
+		Contact contact = findById.get();
+		contact.setActiveSw("N");
+		contactRepository.save(contact);
+		return "Record Deleted..";		
+}else {
+	return "No Record Foundd!!";
+}
 	}
 
 }

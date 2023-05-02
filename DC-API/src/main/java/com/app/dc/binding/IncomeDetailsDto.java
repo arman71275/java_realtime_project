@@ -7,5 +7,7 @@ public class IncomeDetailsDto {
 	private int monthlyIncome;
 	private int rentIncome;
 	private int propertyIncome;
+	
+	private long caseNumber;
 
 }
