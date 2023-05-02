@@ -8,11 +8,11 @@ public class UserForm {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Long phoneNo;
+	private String phoneNo;
 	private LocalDate dob;
 	private String gender;
-	private Long countryId;
-	private Long stateId;
-	private Long cityId;
+	private Integer countryId;
+	private Integer stateId;
+	private Integer cityId;
 	
 }
