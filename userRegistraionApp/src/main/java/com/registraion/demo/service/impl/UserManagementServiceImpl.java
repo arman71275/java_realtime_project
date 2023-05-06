@@ -113,12 +113,13 @@ System.out.println("body::" + body + subject + "To::" + to);
 
 	@Override
 	public String UnlockAccount(UnlockAccountForm unlockAccountForm) {
-		UserDetail findUserByEmail = userRepository.findByEmail(unlockAccountForm.getEmail());
+		UserDetail user = userRepository.findByEmail(unlockAccountForm.getEmail());
 
-		if (unlockAccountForm.getTempPwd().equals(findUserByEmail.getUserPwd())) {
-			findUserByEmail.setUserPwd(unlockAccountForm.getNewPwd());
-			findUserByEmail.setAccStatus("UNLOCKED");
-
+		if (unlockAccountForm.getTempPwd().equals(user.getUserPwd())) {
+			user.setUserPwd(unlockAccountForm.getNewPwd());
+			user.setAccStatus("UNLOCKED");
+			userRepository.save(user);
+			System.out.println("user::"+ user);
 			return "Account unlocked, please proceed with login";
 		}
 		return "Please Enter Correct Password";
@@ -132,7 +133,7 @@ System.out.println("body::" + body + subject + "To::" + to);
 			return "Invalid Credentials!";
 
 		}
-		if (user.getAccStatus().equals("UNLOCKED")) {
+		if (user.getAccStatus().equals("LOCKED")) {
 			return "User is locked!.";
 		}
 		return "login success..";
@@ -142,15 +143,20 @@ System.out.println("body::" + body + subject + "To::" + to);
 	public String forgotPassword(String email) {
 		UserDetail user = userRepository.findByEmail(email);
 		
-		if(user.getEmail().equals(email)) {
-			//email is valid send password to email
-			String userPwd = user.getUserPwd();
-			
-		return "Password is sent to registerd Email";
+		if (user == null) {
+			return "No Account Found";
 		}
-		return "User is not registered";
+
+		String from = "armani71275@gmail.com";
+		String subject = "Recover Password";
+		String body = readEmailBody("FORGOT_PWD_EMAIL_BODY.txt", user);
+
+		emailUtils.sendEmail(from,email, subject, body);
+
+		return "Password sent to registered email";
 	}
 
+	
 	
 	private String generateRandomPwd() {
 		String text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
