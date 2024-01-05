@@ -96,7 +96,7 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 			dcCaseRepository.save(entity);
 		}
 		
-		return caseNumber;
+		return caseNumber;      //sending caseNumber back in response i.e Autofilled caseNumber
 	}
 
 
