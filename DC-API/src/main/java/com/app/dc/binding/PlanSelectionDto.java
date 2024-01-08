@@ -13,7 +13,7 @@ public class PlanSelectionDto{
 	private long caseNum;                //To take request
 	private long planId;                   //PlanSelctionRequest
 	
-	private Map<Integer, String> planInfo;  //To return UI response map
+	private Map<Long, String> planInfo;  //To return UI response map
 	                                        //PlanSelectionResponse
 
 }

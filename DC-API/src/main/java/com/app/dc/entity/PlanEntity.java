@@ -14,11 +14,11 @@ import lombok.Data;
 public class PlanEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer planId;   //primaryKey
+	private long planId;   //primaryKey
 	private String planName;
 	
 	//private Integer caseNum; //forignKey reference to DC_CASES
 	
-	@OneToOne(mappedBy = "planEntity")
+	@OneToOne(mappedBy = "plan")
 	private DcCaseEntity dcCaseEntity;
 }

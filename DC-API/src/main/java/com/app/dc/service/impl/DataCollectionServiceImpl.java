@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,14 +63,14 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 		if(planById.isPresent()) {
 			//create case
 			DcCaseEntity caseEntity = new DcCaseEntity();
-			caseEntity.setAppId(appId);
+			caseEntity.setCaseNum(appId);
 			dcCaseRepository.save(caseEntity);
 			System.out.println("caseEntity::"+caseEntity);
 			
 			//fetching plan names for dropdown
 			List<PlanEntity> planList = planSelectionRepository.findAll();
 			
-			Map<Integer, String> planMap = new HashMap<>();
+			Map<Long, String> planMap = new HashMap<>();
 			planList.forEach(plan -> {
 				planMap.put(plan.getPlanId(), plan.getPlanName());
 			});
@@ -83,17 +85,26 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 		
 	}
 
-
 	@Override
 	public Long updatePlanSelection(PlanSelectionDto planDto) {
 		long planNumber = planDto.getPlanId();
 		long caseNumber=  planDto.getCaseNum();
 		
 		Optional<DcCaseEntity>  findByCase= dcCaseRepository.findById(caseNumber);
-		if(findByCase.isPresent()) {
-			DcCaseEntity entity = new DcCaseEntity();
-			entity.setPlanId(planNumber);
-			dcCaseRepository.save(entity);
+		log.info("DataCollectionService::updatePlan request caseNum {}",caseNumber);
+		
+		if(findByCase.isPresent()) {	
+			DcCaseEntity dcCaseEntity = findByCase.get();
+			
+			// Fetch the associated PlanEntity
+			 PlanEntity planEntity = planSelectionRepository.findById(planNumber)
+		                .orElseThrow(() -> new EntityNotFoundException("PlanEntity not found with id: " + planNumber));
+
+			// Update the association
+		        dcCaseEntity.setPlan(planEntity);
+		
+		     // Save the owning entity
+			dcCaseRepository.save(dcCaseEntity);
 		}
 		
 		return caseNumber;
