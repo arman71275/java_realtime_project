@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,15 +29,14 @@ public class DcCaseEntity{
 	//private Long planId;  //forignkey reference PLAN_MASTER
 	//private Long appId;  //forignKey reference CITIZEN_APPS
 	
-	//@OneToOne(targetEntity = PlanEntity.class,cascade = CascadeType.ALL)
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = PlanEntity.class,cascade = CascadeType.ALL)
 	@JoinColumn(name="fk_planId",referencedColumnName = "planId")
 	private PlanEntity plan;
 	
 	
 	@OneToOne(targetEntity =CitizenAppEntity.class,cascade = CascadeType.ALL)
 	@JoinColumn(name="fk_appId",referencedColumnName = "appId")
-	private CitizenAppEntity citizenAppEntity;
+	private CitizenAppEntity citizenApp;
 
 
 	

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,17 +56,20 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 	
 	
 	@Override
+	@Transactional
 	public PlanSelectionDto createCasse(long appId) {
 		PlanSelectionDto planSelection = new PlanSelectionDto();
 		
 		Optional<CitizenAppEntity> planById=  citizenAppRepository.findById(appId);
 		log.info("DataCollectionService::createCasse request appId {}",appId);
 		if(planById.isPresent()) {
-			//create case
+			//create case 
 			DcCaseEntity caseEntity = new DcCaseEntity();
-			caseEntity.setCaseNum(appId);
+			CitizenAppEntity citizenAppEntity = planById.get();
+			System.out.println("citizenAppEntity:;"+citizenAppEntity);
+			
+			caseEntity.setCitizenApp(citizenAppEntity);
 			dcCaseRepository.save(caseEntity);
-			System.out.println("caseEntity::"+caseEntity);
 			
 			//fetching plan names for dropdown
 			List<PlanEntity> planList = planSelectionRepository.findAll();

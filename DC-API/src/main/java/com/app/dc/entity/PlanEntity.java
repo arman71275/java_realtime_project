@@ -19,6 +19,6 @@ public class PlanEntity {
 	
 	//private Integer caseNum; //forignKey reference to DC_CASES
 	
-	@OneToOne(mappedBy = "plan")
-	private DcCaseEntity dcCaseEntity;
+	//@OneToOne(mappedBy = "plan")
+	//private DcCaseEntity dcCaseEntity; 
 }
