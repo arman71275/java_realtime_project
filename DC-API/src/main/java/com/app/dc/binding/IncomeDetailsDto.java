@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class IncomeDetailsDto {
-	private int monthlyIncome;
-	private int rentIncome;
-	private int propertyIncome;
+	private int salaryIncome;
+	private Double rentIncome;
+	private Double propertyIncome;
 	
-	private long caseNumber;
+	private Long caseNumber;
 
 }

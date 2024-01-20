@@ -80,7 +80,7 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 			});
 			
 			//preparing response data
-			planSelection.setCaseNum(caseEntity.getCaseNum());
+			planSelection.setCaseNumber(caseEntity.getCaseNum());
 			planSelection.setPlanInfo(planMap);
 			
 			return planSelection ;
@@ -92,7 +92,7 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 	@Override
 	public Long updatePlanSelection(PlanSelectionDto planDto) {
 		long planNumber = planDto.getPlanId();
-		long caseNumber=  planDto.getCaseNum();
+		long caseNumber=  planDto.getCaseNumber();
 		
 		Optional<DcCaseEntity>  findByCase= dcCaseRepository.findById(caseNumber);
 		log.info("DataCollectionService::updatePlan request caseNum {}",caseNumber);
@@ -119,18 +119,27 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 	public Long saveIncomeDetail(IncomeDetailsDto incomeDto) {
 		long caseNo = incomeDto.getCaseNumber();
 		
-		IncomeDetailsEntity entity = new IncomeDetailsEntity();
-		BeanUtils.copyProperties(incomeDto, entity);
+		Optional<DcCaseEntity>  findByCase= dcCaseRepository.findById(caseNo);
+		if(findByCase.isPresent()) {
+			
+		IncomeDetailsEntity IncomeEntity = new IncomeDetailsEntity();
+		BeanUtils.copyProperties(incomeDto, IncomeEntity);
+		DcCaseEntity dcCase = findByCase.get();
+		//Set caseNo forign key in Income Table
+		IncomeEntity.setDcCase(dcCase);
 		
-		incomeDetailsRepository.save(entity );
 		
+		incomeDetailsRepository.save(IncomeEntity );
+		}
 		return caseNo;
 	}
 
 
 	@Override
 	public Long saveEducationDetail(EducationDetailsDto educationDto) {
+		
 		long caseNo = educationDto.getCaseNumber();
+		log.info("DataCollectionService::saveEducationDetail request caseNum {}",caseNo);
 		
 		EducationDetailsEntity educationEntity = new EducationDetailsEntity();
 		BeanUtils.copyProperties(educationDto, educationEntity);

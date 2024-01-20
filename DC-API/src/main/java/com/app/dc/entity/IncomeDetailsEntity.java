@@ -17,14 +17,14 @@ import lombok.Data;
 public class IncomeDetailsEntity {
 	@Id
 	@GeneratedValue
-	private long incomeId;  //primary key
+	private Long incomeId;  //primary key
 	private int salaryIncome;
-	private int rentIncome;
-	private int propertyIncome;
+	private Double rentIncome;
+	private Double propertyIncome;
 	
 	//private Integer caseNum; //forignKey reference to DC_CASES
 
 	@OneToOne(targetEntity = DcCaseEntity.class,cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_caseNum",referencedColumnName = "caseNum")
-	private DcCaseEntity dcCaseEntity;
+	private DcCaseEntity dcCase;
 }
