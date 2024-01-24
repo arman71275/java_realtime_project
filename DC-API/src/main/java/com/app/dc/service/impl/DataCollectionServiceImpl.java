@@ -141,10 +141,17 @@ public class DataCollectionServiceImpl implements DataCollectionService{
 		long caseNo = educationDto.getCaseNumber();
 		log.info("DataCollectionService::saveEducationDetail request caseNum {}",caseNo);
 		
+		Optional<DcCaseEntity>  findByCase= dcCaseRepository.findById(caseNo);
+		if(findByCase.isPresent()) {
+			
 		EducationDetailsEntity educationEntity = new EducationDetailsEntity();
 		BeanUtils.copyProperties(educationDto, educationEntity);
-		educationDetailsRepository.save(educationEntity);
 		
+		DcCaseEntity dcCase = findByCase.get();
+		//set caseNo forignKey in education table
+		educationEntity.setDcCaseEntity(dcCase);
+		educationDetailsRepository.save(educationEntity);
+		}
 		return caseNo;
 	}
 
